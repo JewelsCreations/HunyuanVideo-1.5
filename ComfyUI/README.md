@@ -36,14 +36,10 @@ Find workflow templates at:
 - **720p Image-to-Video**: https://github.com/Comfy-Org/workflow_templates/blob/main/templates/video_hunyuan_video_1.5_720p_i2v.json
 - **720p Text-to-Video**: https://github.com/Comfy-Org/workflow_templates/blob/main/templates/video_hunyuan_video_1.5_720p_t2v.json
 
-> **Important**: Workflows are still being updated. Please ensure you are using the latest version of the workflow templates to guarantee the best generation results.
 
-### How to Use
+* **Important**: Workflows are still being updated. Please ensure you are using the latest version of the workflow templates to guarantee the best generation results.
+* **Important**: The distilled models are CFG-distilled models rather than step-distilled models. Please run with 50 inference steps for best generation quality. The recommended configurations are provided in the following table.
 
-1. Download `.json` workflow files from the template repository
-2. In ComfyUI, click "Load" and select the workflow file
-3. Adjust parameters (prompt, resolution, frames, etc.)
-4. Ensure the model path points to the correct checkpoint
 
 ### Recommended Inference Configurations
 
