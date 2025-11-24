@@ -152,6 +152,7 @@ pip install -i https://mirrors.tencent.com/pypi/simple/ --upgrade tencentcloud-s
   ```bash
   git clone https://github.com/Tencent-Hunyuan/flex-block-attn.git
   cd flex-block-attn
+  git submodule update --init --recursive
   python3 setup.py install
   ```
 
