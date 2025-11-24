@@ -72,14 +72,7 @@ def generate_video(args):
     
     enable_sr = args.sr
     
-    # Build transformer_version based on flags
-    # Note: sparse attention requires distilled model, so if sparse_attn is enabled,
-    # we automatically include distilled in the version string
-    transformer_version = f'{args.resolution}_{task}'
-    if args.cfg_distilled or args.sparse_attn:
-        transformer_version += '_distilled'
-    if args.sparse_attn:
-        transformer_version += '_sparse'
+    transformer_version = HunyuanVideo_1_5_Pipeline.get_transformer_version(args.resolution, task, args.cfg_distilled, False, args.sparse_attn)
     
     if args.dtype == 'bf16':
         transformer_dtype = torch.bfloat16

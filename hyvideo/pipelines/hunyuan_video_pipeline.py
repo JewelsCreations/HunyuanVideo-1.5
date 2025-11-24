@@ -1011,8 +1011,16 @@ class HunyuanVideo_1_5_Pipeline(DiffusionPipeline):
         else:
             self.scheduler = self._create_scheduler(flow_shift)
 
+        if seed is None or seed == -1:
+            seed = random.randint(100000, 999999)
+
         if get_parallel_state().sp_enabled:
             assert seed is not None
+            if dist.is_initialized():
+                obj_list = [seed]
+                group_src_rank = dist.get_global_rank(get_parallel_state().sp_group, 0)
+                dist.broadcast_object_list(obj_list, src=group_src_rank, group=get_parallel_state().sp_group)
+                seed = obj_list[0]
 
         if generator is None and seed is not None:
             generator = torch.Generator(device=torch.device('cpu')).manual_seed(seed)
@@ -1344,6 +1352,18 @@ class HunyuanVideo_1_5_Pipeline(DiffusionPipeline):
             enable_offloading=self.enable_offloading,
             **SR_PIPELINE_CONFIGS[sr_version],
         )
+
+    @staticmethod
+    def get_transformer_version(resolution, task, cfg_distilled=False, step_distilled=False, sparse_attn=False):
+        # Build transformer_version based on flags
+        # Note: sparse attention requires distilled model, so if sparse_attn is enabled,
+        # we automatically include distilled in the version string
+        transformer_version = f'{resolution}_{task}'
+        if cfg_distilled or sparse_attn:
+            transformer_version += '_distilled'
+        if sparse_attn:
+            transformer_version += '_sparse'
+        return transformer_version
 
     @classmethod
     def create_pipeline(cls, pretrained_model_name_or_path, transformer_version, create_sr_pipeline=False, force_sparse_attn=False, transformer_dtype=torch.bfloat16, enable_offloading=None, enable_group_offloading=None, overlap_group_offloading=None, device=None, **kwargs):
