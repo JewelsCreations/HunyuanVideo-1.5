@@ -210,14 +210,12 @@ def get_muon_optimizer(model, lr=1e-3,  weight_decay=0.1, momentum=0.95, adamw_b
     muon_params = [
         p
         for name, p in model.named_parameters()
-        if p.ndim >= 2 
+        if p.requires_grad and p.ndim >= 2 
     ]
     adamw_params = [
         p
         for name, p in model.named_parameters()
-        if not (
-            p.ndim >= 2 
-        )
+        if p.requires_grad and not (p.ndim >= 2)
     ]
 
     return Muon(
