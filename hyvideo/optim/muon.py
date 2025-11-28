@@ -3,10 +3,10 @@ import torch
 try:
     from torch.distributed.tensor import DTensor
     from torch.distributed.tensor.placement_types import (
-    Partial,
-    Placement,
-    Replicate,
-    Shard,
+        Partial,
+        Placement,
+        Replicate,
+        Shard,
     )
 except ImportError:
     # handle old pytorch versions
