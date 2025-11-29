@@ -41,6 +41,7 @@ HunyuanVideo-1.5 is a video generation model that delivers top-tier quality with
 </p>
 
 ## 🔥🔥🔥 News
+* 📚 Training code is coming soon.
 * 🚀 Nov 27, 2025: We now support cache inference (deepcache, teacache, taylorcache), achieving significant speedup! Pull the latest code to try it. 🔥🔥🔥🆕 
 * 🚀 Nov 24, 2025: We now support deepcache inference.
 * 👋 Nov 20, 2025: We release the inference code and model weights of HunyuanVideo-1.5.
@@ -92,6 +93,7 @@ If you develop/use HunyuanVideo-1.5 in your projects, welcome to let us know.
   - [Command Line Arguments](#command-line-arguments)
   - [Optimal Inference Configurations](#optimal-inference-configurations)
 - [🧱 Models Cards](#-models-cards)
+- [🎓 Training](#-training)
 - [🎬 More Examples](#-more-examples)
 - [📊 Evaluation](#-evaluation)
 - [📚 Citation](#-citation)
@@ -332,6 +334,32 @@ The following table provides the optimal inference configurations (CFG scale, em
 |HunyuanVideo-1.5-1080P-sr-step-distill |[1080P-sr](https://huggingface.co/tencent/HunyuanVideo-1.5/tree/main/transformer/1080p_sr_distilled) |
 
 
+
+## 🎓 Training
+
+> 💡 Training code is coming soon. We will release the complete training pipeline in the future.
+
+HunyuanVideo-1.5 is trained using the **Muon optimizer**, which accelerates convergence and improves training stability. The Muon optimizer combines momentum-based updates with Newton-Schulz orthogonalization for efficient optimization of large-scale video generation models.
+
+### Creating a Muon Optimizer
+
+Here's how to create a Muon optimizer for your model:
+
+```python
+from hyvideo.optim.muon import get_muon_optimizer
+
+# Create Muon optimizer for your model
+optimizer = get_muon_optimizer(
+    model=your_model,
+    lr=lr,                      # Learning rate
+    weight_decay=weight_decay,  # Weight decay
+    momentum=momentum,          # Momentum coefficient
+    adamw_betas=adamw_betas,   # AdamW betas for 1D parameters
+    adamw_eps=adamw_eps        # AdamW epsilon
+)
+```
+
+> 📝 **To be continued**: More training details and the complete training pipeline will be released soon. Stay tuned!
 
 ## 🎬 More Examples
 |Features|Demo1|Demo2|

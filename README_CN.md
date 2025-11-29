@@ -40,6 +40,7 @@ HunyuanVideo-1.5作为一款轻量级视频生成模型，仅需83亿参数即�
 </p>
 
 ## 🔥🔥🔥 最新动态
+* 📚 训练代码即将发布。
 * 🚀 Nov 27, 2025: 我们现已支持 cache 推理（deepcache, teacache, taylorcache），可极大加速推理！请 pull 最新代码体验。 🔥🔥🔥🆕 
 * 🚀 Nov 24, 2025: 我们现已支持 deepcache 推理。
 * 👋 Nov 20, 2025: 我们开源了 HunyuanVideo-1.5的代码和推理权重
@@ -89,6 +90,7 @@ HunyuanVideo-1.5作为一款轻量级视频生成模型，仅需83亿参数即�
   - [命令行参数](#命令行参数)
   - [最优推理配置](#最优推理配置)
 - [🧱 模型卡片](#-模型卡片)
+- [🎓 训练](#-训练)
 - [🎬 更多示例](#-更多示例)
 - [📊 性能评估](#-性能评估)
 - [📚 引用](#-引用)
@@ -334,6 +336,32 @@ torchrun --nproc_per_node=$N_INFERENCE_GPU generate.py \
 |HunyuanVideo-1.5-1080P-sr-step-distill |[1080P-sr](https://huggingface.co/tencent/HunyuanVideo-1.5/tree/main/transformer/1080p_sr_distilled) |
 
 
+
+## 🎓 训练
+
+> 💡 训练代码即将发布。我们将在未来发布完整的训练流程。
+
+HunyuanVideo-1.5 使用 **Muon 优化器**进行训练，该优化器能够加速收敛并提高训练稳定性。Muon 优化器结合了基于动量的更新和 Newton-Schulz 正交化方法，可高效优化大规模视频生成模型。
+
+### 创建 Muon 优化器
+
+以下是如何为您的模型创建 Muon 优化器：
+
+```python
+from hyvideo.optim.muon import get_muon_optimizer
+
+# 为您的模型创建 Muon 优化器
+optimizer = get_muon_optimizer(
+    model=your_model,
+    lr=lr,                      # 学习率
+    weight_decay=weight_decay,  # 权重衰减
+    momentum=momentum,          # 动量系数
+    adamw_betas=adamw_betas,   # 1D 参数的 AdamW betas
+    adamw_eps=adamw_eps        # AdamW epsilon
+)
+```
+
+> 📝 **未完待续**：更多训练细节和完整的训练流程即将发布，敬请期待！
 
 ## 🎬 更多示例
 |特性|示例1|示例2|
